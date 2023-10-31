@@ -2,7 +2,7 @@ from discord.ext import commands
 import openai
 
 
-class AICommand(commands.Cog):
+class AI(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -28,4 +28,4 @@ class AICommand(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(AICommand(bot))
+    await bot.add_cog(AI(bot))
