@@ -18,6 +18,7 @@ bot = commands.Bot(command_prefix=PREFIX, intents=intents, case_insensitive=True
 @bot.event
 async def on_ready():
     print(f'{bot.user} has connected to Discord.')
+    print("THIS IS A TEST")
 
 # For messages
 @bot.event
