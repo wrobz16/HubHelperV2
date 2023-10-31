@@ -16,7 +16,7 @@ OPENAI_KEY = config["openai_key"]
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=PREFIX, intents=intents, case_insensitive=True)
 
-# Set OpenAI key
+# Set some other things
 openai.api_key = OPENAI_KEY
 
 # On ready
