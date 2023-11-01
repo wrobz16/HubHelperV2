@@ -1,9 +1,9 @@
 import discord
 from discord.ext import commands
-import openai
-import requests 
-from PIL import Image
 import io
+import openai
+from PIL import Image
+import requests 
 
 
 class PhotoAI(commands.Cog):
@@ -12,21 +12,25 @@ class PhotoAI(commands.Cog):
 
 
     @commands.command(name="photo")
-    async def photo(self, ctx, *, description: str):
-        def generate(text): 
+    async def photo(self, ctx, description: str, variations: int = 1):
+        def generate(text, num_variations): 
             res = openai.Image.create( 
                 prompt=text, 
-                n=1, 
+                n=num_variations,
                 size="256x256", 
             ) 
-            return res["data"][0]["url"]
+            return [image["url"] for image in res["data"]]
         
-        url1 = generate(description) 
-        
-        response = requests.get(url1) 
-        image_stream = io.BytesIO(response.content)
+        if 1 <= variations <= 10:
+            urls = generate(description, variations) 
 
-        await ctx.send(file=discord.File(fp=image_stream, filename="photo.jpg"))
+            for url in urls:
+                response = requests.get(url) 
+                image_stream = io.BytesIO(response.content)
+
+                await ctx.send(file=discord.File(fp=image_stream, filename="photo.jpg"))
+        else:
+            await ctx.send("Please provide a number of variations between 1 and 10.")
 
 
 async def setup(bot):
