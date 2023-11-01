@@ -1,3 +1,4 @@
+import datetime
 import discord
 from discord.ext import commands
 import io
@@ -5,10 +6,13 @@ import openai
 from PIL import Image
 import requests 
 
+LIMIT = 25
 
 class PhotoAI(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.images_generated_today = 0
+        self.current_date = datetime.date.today()
 
 
     @commands.command(name="photo")
@@ -21,7 +25,15 @@ class PhotoAI(commands.Cog):
             ) 
             return [image["url"] for image in res["data"]]
         
-        if 1 <= variations <= 10:
+        if self.current_date != datetime.date.today():
+            self.current_date = datetime.date.today()
+            self.images_generated_today = 0
+
+        if self.images_generated_today + variations > LIMIT:
+            await ctx.send("Sorry, the limit of 25 images per day has been reached.")
+            return
+        
+        if 1 <= variations <= 3:
             urls = generate(description, variations) 
 
             for url in urls:
@@ -29,8 +41,19 @@ class PhotoAI(commands.Cog):
                 image_stream = io.BytesIO(response.content)
 
                 await ctx.send(file=discord.File(fp=image_stream, filename="photo.jpg"))
+
+            self.images_generated_today += variations
         else:
             await ctx.send("Please provide a number of variations between 1 and 10.")
+
+    @commands.command(name="photos_left")
+    async def photos_left(self, ctx):
+        if self.current_date != datetime.date.today():
+            self.current_date = datetime.date.today()
+            self.images_generated_today = 0
+
+        remaining = LIMIT - self.images_generated_today
+        await ctx.send(f"You can generate {remaining} more images today.")
 
 
 async def setup(bot):
