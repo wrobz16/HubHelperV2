@@ -1,4 +1,3 @@
-import asyncio
 import discord
 from discord.ext import commands
 import yt_dlp as ytdl
@@ -38,7 +37,7 @@ class YouTube(commands.Cog):
             video_url = search_results['entries'][0]['url']
             voice = ctx.voice_client
             try:
-                source = discord.FFmpegPCMAudio(executable="ffmpeg", source=video_url, #C executable=":\\FFmpeg\\ffmpeg-2023-10-29-git-2532e832d2-full_build\\bin\\ffmpeg.exe"
+                source = discord.FFmpegPCMAudio(executable="ffmpeg.exe", source=video_url,
                             options='-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5')
                 voice.play(source, after=lambda e: print(f'Player error: {e}') if e else None)
             except Exception as e:
