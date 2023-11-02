@@ -15,14 +15,17 @@ class PhotoAI(commands.Cog):
         self.current_date = datetime.date.today()
 
 
-    @commands.command(name="photo")
-    async def photo(self, ctx, description: str, variations: int = 1):
+    @commands.command(name="photo",
+                      help="Generates an image based on the provided prompt. Usage: !photo <description (in quotes)> <variations (3 max)>.",
+                      brief="Generate an image with AI based on a given prompt.")
+    async def photo(self, ctx, 
+                    description:str=commands.parameter(description="Prompt for the AI to use."), 
+                    variations:int=commands.parameter(default=1, description="The number of photos to be generated (max: 3)")):
         def generate(text, num_variations): 
             res = openai.Image.create( 
                 prompt=text, 
                 n=num_variations,
-                size="256x256", 
-            ) 
+                size="256x256")
             return [image["url"] for image in res["data"]]
         
         if self.current_date != datetime.date.today():
