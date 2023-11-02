@@ -1,7 +1,7 @@
 from discord.ext import commands
 
 
-class GIT(commands.Cog):
+class INFO(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -13,4 +13,4 @@ class GIT(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(GIT(bot))
+    await bot.add_cog(INFO(bot))

@@ -3,7 +3,6 @@ import discord
 from discord.ext import commands
 import io
 import openai
-from PIL import Image
 import requests 
 
 LIMIT = 25
@@ -16,7 +15,7 @@ class PhotoAI(commands.Cog):
 
 
     @commands.command(name="photo",
-                      help="Generates an image based on the provided prompt. Usage: !photo <description (in quotes)> <variations (3 max)>.",
+                      help=f"Generates an image based on the provided prompt ({LIMIT} per day). Usage: !photo <description (in quotes)> <variations (3 max)>.",
                       brief="Generate an image with AI based on a given prompt.")
     async def photo(self, ctx, 
                     description:str=commands.parameter(description="Prompt for the AI to use."), 
@@ -49,7 +48,10 @@ class PhotoAI(commands.Cog):
         else:
             await ctx.send("Please provide a number of variations between 1 and 10.")
 
-    @commands.command(name="photos_left")
+
+    @commands.command(name="photos_left",
+                      help=f"Sends the remaining amount of photos that are able to be generated for the day ({LIMIT} per day).",
+                      brief="Amount of photos left to be generated.")
     async def photos_left(self, ctx):
         if self.current_date != datetime.date.today():
             self.current_date = datetime.date.today()
