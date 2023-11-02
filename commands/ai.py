@@ -7,8 +7,10 @@ class AI(commands.Cog):
         self.bot = bot
 
 
-    @commands.command(name="ai")
-    async def ai_command(self, ctx, *, question):
+    @commands.command(name="ai",
+                      help="Responds to a given prompt using GPT-4.")
+    async def ai_command(self, ctx, *, 
+                         question=commands.parameter(description="Prompt for the AI.")):
         try:
             response = openai.ChatCompletion.create(
                 model="gpt-4",
