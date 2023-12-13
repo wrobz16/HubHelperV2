@@ -5,6 +5,8 @@ import json
 import openai
 import os
 
+# Test to see if Visual Studio Git is configured
+
 # Load configs
 with open("config.json", "r") as file:
     config = json.load(file)
