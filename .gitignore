@@ -2,3 +2,4 @@ config.json
 commands/__pycache__/*
 ffmpeg.exe
 swear_words.json
+.vs
