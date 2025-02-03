@@ -12,14 +12,12 @@ with open("config.json", "r") as file:
     config = json.load(file)
 PREFIX = config["prefix"]
 TOKEN = config["token"]
-OPENAI_KEY = config["openai_key"]
 
 # Initialize bot
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=PREFIX, intents=intents, case_insensitive=True)
 
 # Set some other things
-openai.api_key = OPENAI_KEY
 
 # On ready
 @bot.event
@@ -27,6 +25,7 @@ async def on_ready():
     print(f'{bot.user} has connected to Discord.')
 
 # Load commands
+
 async def load_extensions():
     for filename in os.listdir("./commands"):
         if filename.endswith(".py") and filename != "__init__.py":
