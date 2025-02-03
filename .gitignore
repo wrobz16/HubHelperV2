@@ -1,4 +1,3 @@
 config.json
-commands/__pycache__/*
-swear_words.json
+features/__pycache__/*
 .vs
