@@ -20,6 +20,13 @@ bot = commands.Bot(command_prefix=PREFIX, intents=intents, case_insensitive=True
 bot.config = config
 
 #######################################
+# Override default on_message
+#######################################
+@bot.event
+async def on_message(message):
+    pass
+
+#######################################
 # On ready
 #######################################
 @bot.event
