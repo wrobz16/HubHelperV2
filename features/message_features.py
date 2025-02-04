@@ -12,9 +12,10 @@ class MessageDeletion(commands.Cog):
         BOT_ID = self.bot.config["bot_id"]
         MESSAGE_CHANNEL_ID = self.bot.config["message_channel_id"]
         SONG_REQUEST_CHANNEL_ID = self.bot.config["song_request_channel_id"]
+        BOT_DELETE_PREFIX = self.bot.config["bot_delete_prefix"]
 
         # Check if pancake prefix
-        if message.content.startswith("p!"):
+        if message.content.startswith(BOT_DELETE_PREFIX):
             self.recent_p_user = message.author
 
         # Reply to idiot who sent the song request in the wrong channel

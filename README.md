@@ -7,5 +7,6 @@ A personal discord bot.
     "token": "",  
     "bot_id": ,  
     "message_channel_id": ,  
-    "song_request_channel_id":   
+    "song_request_channel_id":,  
+    "bot_delete_prefix": ""  
 }
